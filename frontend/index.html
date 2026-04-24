@@ -335,9 +335,9 @@
 
   <!-- =================== TOP BAR =================== -->
   <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-30">
-    <div class="flex items-center gap-4 px-5 py-3">
+    <div class="flex items-center gap-3 px-5 py-3 flex-wrap overflow-hidden">
       <!-- Logo -->
-      <div class="flex items-center gap-3 w-[228px] shrink-0">
+      <div class="flex items-center gap-3 shrink-0">
         <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 grid place-items-center text-slate-900 font-black">V</div>
         <div class="leading-tight">
           <div class="text-sm font-bold tracking-tight">VendorGuard <span class="text-amber-400">AI</span></div>
@@ -346,21 +346,21 @@
       </div>
 
       <!-- Vendor input + scan -->
-      <div class="flex-1 flex items-center gap-2 min-w-0">
+      <div class="flex-1 flex items-center gap-2 min-w-[200px]">
         <input id="vendor-input" type="text" value=""
-               class="flex-1 min-w-0 bg-slate-950 border border-slate-700 rounded-lg px-4 py-2 text-sm mono focus:outline-none focus:border-amber-400"
+               class="flex-1 min-w-0 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm mono focus:outline-none focus:border-amber-400"
                placeholder="e.g. openai.com, razorpay.com" />
-        <button id="scan-btn" class="btn-primary px-4 py-2 rounded-lg text-sm disabled:pointer-events-none">
+        <button id="scan-btn" class="btn-primary px-3 py-2 rounded-lg text-xs whitespace-nowrap shrink-0 disabled:pointer-events-none">
           Scan Vendor
         </button>
-        <button id="agent-btn" class="btn-indigo px-4 py-2 rounded-lg text-sm disabled:pointer-events-none"
+        <button id="agent-btn" class="btn-indigo px-3 py-2 rounded-lg text-xs whitespace-nowrap shrink-0 disabled:pointer-events-none"
                 title="Run the 6-step autonomous onboarding agent for this vendor (Ctrl+Shift+A)">
           ⚡ Autonomous Onboard
         </button>
       </div>
 
       <!-- Integration chips -->
-      <div class="hidden lg:flex items-center gap-1.5">
+      <div class="hidden xl:flex items-center gap-1 shrink-0">
         <span id="api-status" class="chip mono">api: …</span>
         <span id="ml-chip" class="chip mono hidden">ml: …</span>
         <span id="nuclei-chip" class="chip mono hidden">nuclei: …</span>
@@ -372,26 +372,26 @@
       </div>
 
       <!-- Persona switcher (T6) -->
-      <div class="flex items-center gap-1 border border-slate-800 rounded-lg p-0.5 bg-slate-950/40" title="Switch audience lens: CISO (default) / Legal / DPO">
+      <div class="hidden lg:flex items-center gap-1 border border-slate-800 rounded-lg p-0.5 bg-slate-950/40 shrink-0" title="Switch audience lens: CISO (default) / Legal / DPO">
         <button data-persona="ciso"  class="persona-chip chip mono active">CISO View</button>
         <button data-persona="legal" class="persona-chip chip mono">Legal View</button>
         <button data-persona="dpo"   class="persona-chip chip mono">DPO View</button>
       </div>
 
       <!-- Demo mode + QR + help -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1.5 shrink-0">
         <span id="demo-badge" class="demo-badge hidden">DEMO RUNNING…</span>
-        <button id="ask-dpdp-nav-btn" class="btn-ghost px-2 py-2 rounded-lg text-xs mono" title="Ask a DPDP question">💬 Ask DPDP</button>
-        <button id="qr-btn" class="btn-ghost px-2 py-2 rounded-lg text-xs mono" title="Share this demo with judges">🔗 Share / QR</button>
-        <button id="help-btn" class="btn-ghost px-2 py-2 rounded-lg text-xs mono" title="Keyboard shortcuts (press ?)">?</button>
-        <button id="tour-btn" class="btn-primary px-3 py-2 rounded-lg text-xs mono" title="Guided demo walkthrough">🎯 Guided Demo</button>
-        <button id="demo-btn" class="btn-primary px-3 py-2 rounded-lg text-xs mono" title="Populate all sections with demo data" style="background: linear-gradient(90deg, #f59e0b, #ef4444); animation: pulseBorder 2s ease-in-out infinite;">
+        <button id="ask-dpdp-nav-btn" class="btn-ghost px-2 py-1.5 rounded-lg text-[11px] mono hidden lg:inline-flex" title="Ask a DPDP question">💬 Ask DPDP</button>
+        <button id="qr-btn" class="btn-ghost px-2 py-1.5 rounded-lg text-[11px] mono hidden lg:inline-flex" title="Share this demo with judges">🔗 Share / QR</button>
+        <button id="help-btn" class="btn-ghost px-2 py-1.5 rounded-lg text-[11px] mono" title="Keyboard shortcuts (press ?)">?</button>
+        <button id="tour-btn" class="btn-primary px-2 py-1.5 rounded-lg text-[11px] mono whitespace-nowrap" title="Guided demo walkthrough">🎯 Guided Demo</button>
+        <button id="demo-btn" class="btn-primary px-2 py-1.5 rounded-lg text-[11px] mono whitespace-nowrap" title="Populate all sections with demo data" style="background: linear-gradient(90deg, #f59e0b, #ef4444); animation: pulseBorder 2s ease-in-out infinite;">
           ▶ Demo Mode
         </button>
       </div>
     </div>
     <!-- Breach countdown banner (T5) — hidden until the first gateway block -->
-    <div id="breach-countdown" class="hidden flex items-center justify-between gap-4 px-5 py-2 border-t border-slate-800 bg-rose-950/40 text-xs">
+    <div id="breach-countdown" class="hidden flex items-center justify-between gap-4 px-5 py-2 border-t border-slate-800 bg-rose-950/40 text-xs flex-wrap overflow-hidden">
       <div class="flex items-center gap-3">
         <span class="badge-sev sev-critical countdown-alert">BREACH CLOCK</span>
         <span class="text-rose-200">
@@ -415,7 +415,7 @@
     </div>
 
     <!-- Sticky scan-your-own-domain nudge for expo visitors (T15) -->
-    <div id="try-nudge" class="hidden flex items-center justify-between gap-4 px-5 py-2 border-t border-slate-800 bg-indigo-950/30 text-xs">
+    <div id="try-nudge" class="hidden flex items-center justify-between gap-4 px-5 py-2 border-t border-slate-800 bg-indigo-950/30 text-xs flex-wrap overflow-hidden">
       <div class="flex items-center gap-2">
         <span class="chip" style="background:rgba(99,102,241,0.2); color:#c7d2fe; border-color:rgba(99,102,241,0.4)">TRY IT</span>
         <span class="text-slate-300">
@@ -447,7 +447,7 @@
     </aside>
 
     <!-- =================== MAIN =================== -->
-    <main class="flex-1 min-w-0 p-6">
+    <main class="flex-1 min-w-0 p-6 overflow-x-hidden">
 
       <!-- Sub-tabs bar for grouped nav panels (v3.1) -->
       <div id="sub-tabs" class="hidden flex flex-wrap items-center gap-2 mb-5"></div>
@@ -824,7 +824,7 @@
             <span>VENDOR RISK INTELLIGENCE REPORT</span>
             <span class="text-xs font-normal bg-cyan-900/30 text-cyan-300 px-2 py-0.5 rounded">CLASSIFIED</span>
           </h2>
-          <div id="audit-report-content" class="space-y-4 rounded-2xl border border-cyan-800/50 bg-gradient-to-br from-slate-900 to-slate-950 p-6"></div>
+          <div id="audit-report-content" class="space-y-4 rounded-2xl border border-cyan-800/50 bg-gradient-to-br from-slate-900 to-slate-950 p-6 overflow-hidden"></div>
 
           <!-- Export buttons -->
           <div class="flex gap-3 mt-4 flex-wrap">
