@@ -35,6 +35,6 @@
     fromMeta && metaEl && !metaEl.getAttribute('content').includes('__VG_API__') ? fromMeta : null,
     window.__VG_API_FALLBACK__,
   ];
-  const picked = candidates.find((v) => v && !v.includes('__VG_API__')) || 'http://127.0.0.1:8765';
+  const picked = candidates.find((v) => v && !v.includes('__VG_API__')) || 'http://127.0.0.1:8000';
   window.VG_API = picked.replace(/\/+$/, '');
 })();
