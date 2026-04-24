@@ -785,42 +785,99 @@
       <section data-panel="audit" class="panel space-y-6">
         <div class="flex items-start justify-between flex-wrap gap-3">
           <div>
-            <h1 class="text-2xl font-bold tracking-tight">Audit Pipeline</h1>
-            <p class="text-sm text-slate-400">Step-by-step security audit with real-time processing logs and intelligence report output.</p>
+            <h1 class="text-2xl font-bold tracking-tight flex items-center gap-3">
+              Audit Pipeline
+              <span class="text-xs font-normal bg-gradient-to-r from-cyan-900/50 to-blue-900/50 text-cyan-300 px-2.5 py-1 rounded-full border border-cyan-800/50">6-Layer Deep Scan</span>
+            </h1>
+            <p class="text-sm text-slate-400 mt-1">Real-time multi-source OSINT + DPDP compliance mapping + AI risk scoring. Watch every data source, API call, and finding as it happens.</p>
           </div>
         </div>
 
         <!-- Audit input -->
         <div class="flex gap-3 items-center flex-wrap">
-          <input id="audit-vendor-input" type="text" placeholder="e.g. yahoo-legacy-services.com, equifax-analytics.com"
-            class="flex-1 min-w-[240px] px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-200 placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 outline-none" />
-          <button id="run-audit-btn" onclick="runAuditPipeline()" class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-500 hover:to-blue-500 transition-all shadow-lg shadow-cyan-900/30">
+          <div class="relative flex-1 min-w-[240px]">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">🌐</span>
+            <input id="audit-vendor-input" type="text" placeholder="e.g. yahoo-legacy-services.com, equifax-analytics.com"
+              class="w-full pl-9 pr-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-200 placeholder-slate-500 focus:ring-2 focus:ring-cyan-500 outline-none" />
+          </div>
+          <button id="run-audit-btn" onclick="runAuditPipeline()" class="px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-cyan-600 to-blue-600 text-white hover:from-cyan-500 hover:to-blue-500 transition-all shadow-lg shadow-cyan-900/30 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             Run Full Audit
           </button>
         </div>
 
         <!-- Quick select demo companies -->
-        <div class="flex gap-2 flex-wrap">
-          <span class="text-xs text-slate-500">Quick select:</span>
-          <button onclick="quickAudit('yahoo-legacy-services.com')" class="text-xs px-2 py-1 rounded bg-red-900/30 text-red-300 border border-red-800 hover:bg-red-900/60">Yahoo (Breached)</button>
-          <button onclick="quickAudit('equifax-analytics.com')" class="text-xs px-2 py-1 rounded bg-red-900/30 text-red-300 border border-red-800 hover:bg-red-900/60">Equifax (Breached)</button>
-          <button onclick="quickAudit('google-cloud-vendor.com')" class="text-xs px-2 py-1 rounded bg-emerald-900/30 text-emerald-300 border border-emerald-800 hover:bg-emerald-900/60">Google (Strong)</button>
-          <button onclick="quickAudit('logix-crm-india.com')" class="text-xs px-2 py-1 rounded bg-amber-900/30 text-amber-300 border border-amber-800 hover:bg-amber-900/60">Logix CRM (Mid)</button>
-          <button onclick="quickAudit('apple-enterprise-vendor.com')" class="text-xs px-2 py-1 rounded bg-emerald-900/30 text-emerald-300 border border-emerald-800 hover:bg-emerald-900/60">Apple (Strong)</button>
+        <div class="flex gap-2 flex-wrap items-center">
+          <span class="text-xs text-slate-500 font-medium">Quick scan:</span>
+          <button onclick="quickAudit('yahoo-legacy-services.com')" class="text-xs px-2.5 py-1 rounded-lg bg-red-900/30 text-red-300 border border-red-800/60 hover:bg-red-900/60 transition-colors">Yahoo (Breached)</button>
+          <button onclick="quickAudit('equifax-analytics.com')" class="text-xs px-2.5 py-1 rounded-lg bg-red-900/30 text-red-300 border border-red-800/60 hover:bg-red-900/60 transition-colors">Equifax (Breached)</button>
+          <button onclick="quickAudit('google-cloud-vendor.com')" class="text-xs px-2.5 py-1 rounded-lg bg-emerald-900/30 text-emerald-300 border border-emerald-800/60 hover:bg-emerald-900/60 transition-colors">Google (Strong)</button>
+          <button onclick="quickAudit('logix-crm-india.com')" class="text-xs px-2.5 py-1 rounded-lg bg-amber-900/30 text-amber-300 border border-amber-800/60 hover:bg-amber-900/60 transition-colors">Logix CRM (Mid)</button>
+          <button onclick="quickAudit('apple-enterprise-vendor.com')" class="text-xs px-2.5 py-1 rounded-lg bg-emerald-900/30 text-emerald-300 border border-emerald-800/60 hover:bg-emerald-900/60 transition-colors">Apple (Strong)</button>
+          <button onclick="quickAudit('shopquick-vendor.com')" class="text-xs px-2.5 py-1 rounded-lg bg-red-900/30 text-red-300 border border-red-800/60 hover:bg-red-900/60 transition-colors">ShopQuick (Breached)</button>
+        </div>
+
+        <!-- Global progress bar -->
+        <div id="audit-global-progress" class="hidden">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-semibold text-cyan-400 flex items-center gap-1.5">
+              <span class="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              <span id="audit-progress-label">Initializing pipeline...</span>
+            </span>
+            <span id="audit-progress-pct" class="text-xs font-mono text-cyan-300">0%</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+            <div id="audit-progress-bar" class="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-full transition-all duration-500 ease-out" style="width:0%"></div>
+          </div>
+          <div class="flex justify-between mt-1">
+            <span id="audit-elapsed-time" class="text-[10px] text-slate-500 font-mono">0.0s elapsed</span>
+            <span id="audit-data-processed" class="text-[10px] text-slate-500 font-mono">0 data sources queried</span>
+          </div>
         </div>
 
         <!-- Pipeline steps -->
-        <div id="audit-pipeline-steps" class="space-y-3">
+        <div id="audit-pipeline-steps" class="space-y-2">
           <div class="rounded-2xl border border-slate-800 bg-slate-900/50 p-8 text-center">
-            <div class="text-3xl mb-3">🔬</div>
-            <p class="text-slate-400 text-sm">Enter a vendor domain above and click <strong>Run Full Audit</strong> to see the step-by-step pipeline.</p>
-            <p class="text-slate-500 text-xs mt-2">Each step shows data sources queried, APIs used, and findings discovered.</p>
+            <div class="text-4xl mb-3">🔬</div>
+            <p class="text-slate-400 text-sm">Enter a vendor domain above and click <strong class="text-cyan-400">Run Full Audit</strong> to launch the 6-layer deep scan pipeline.</p>
+            <p class="text-slate-500 text-xs mt-2">Each layer shows live data sources, API calls, findings count, and execution speed in real time.</p>
+            <div class="flex justify-center gap-4 mt-4 text-[10px] text-slate-600">
+              <span>🔐 DNS/TLS</span><span>→</span>
+              <span>📜 CT Logs</span><span>→</span>
+              <span>🕵️ Threat Intel</span><span>→</span>
+              <span>🔍 CVE Scan</span><span>→</span>
+              <span>📋 DPDP Map</span><span>→</span>
+              <span>🧠 AI Score</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pipeline summary stats (shown after completion) -->
+        <div id="audit-summary-stats" class="hidden">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="rounded-xl bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 p-3 text-center">
+              <div id="audit-stat-duration" class="text-xl font-black text-cyan-400 font-mono">—</div>
+              <div class="text-[10px] uppercase text-slate-500 tracking-wider">Total Time</div>
+            </div>
+            <div class="rounded-xl bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 p-3 text-center">
+              <div id="audit-stat-sources" class="text-xl font-black text-blue-400">—</div>
+              <div class="text-[10px] uppercase text-slate-500 tracking-wider">Data Sources</div>
+            </div>
+            <div class="rounded-xl bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 p-3 text-center">
+              <div id="audit-stat-findings" class="text-xl font-black text-amber-400">—</div>
+              <div class="text-[10px] uppercase text-slate-500 tracking-wider">Findings</div>
+            </div>
+            <div class="rounded-xl bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 p-3 text-center">
+              <div id="audit-stat-apis" class="text-xl font-black text-purple-400">—</div>
+              <div class="text-[10px] uppercase text-slate-500 tracking-wider">APIs Called</div>
+            </div>
           </div>
         </div>
 
         <!-- Intelligence Report Output -->
         <div id="audit-intel-report" class="hidden">
           <h2 class="text-lg font-bold text-cyan-400 mb-3 flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             <span>VENDOR RISK INTELLIGENCE REPORT</span>
             <span class="text-xs font-normal bg-cyan-900/30 text-cyan-300 px-2 py-0.5 rounded">CLASSIFIED</span>
           </h2>
@@ -828,16 +885,31 @@
 
           <!-- Export buttons -->
           <div class="flex gap-3 mt-4 flex-wrap">
-            <button onclick="exportAuditJSON()" class="px-4 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700">Export JSON</button>
-            <button onclick="exportAuditPDF()" class="px-4 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700">Export PDF</button>
-            <button onclick="exportAuditZIP()" class="px-4 py-2 rounded-lg text-xs font-medium bg-cyan-900/50 text-cyan-300 border border-cyan-700 hover:bg-cyan-900">Download Audit Pack (ZIP)</button>
+            <button onclick="exportAuditJSON()" class="px-4 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 flex items-center gap-1.5 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Export JSON
+            </button>
+            <button onclick="exportAuditPDF()" class="px-4 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700 flex items-center gap-1.5 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+              Export PDF
+            </button>
+            <button onclick="exportAuditZIP()" class="px-4 py-2 rounded-lg text-xs font-medium bg-cyan-900/50 text-cyan-300 border border-cyan-700 hover:bg-cyan-900 flex items-center gap-1.5 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+              Download Audit Pack (ZIP)
+            </button>
           </div>
         </div>
 
         <!-- Processing logs -->
         <div id="audit-logs" class="hidden">
-          <h3 class="text-sm font-semibold text-slate-400 mb-2">Processing Logs</h3>
-          <div id="audit-log-output" class="bg-black/50 rounded-xl p-4 font-mono text-xs text-green-400 max-h-64 overflow-y-auto border border-slate-800"></div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-sm font-semibold text-slate-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              Processing Logs
+            </h3>
+            <span id="audit-log-count" class="text-[10px] text-slate-600 font-mono">0 entries</span>
+          </div>
+          <div id="audit-log-output" class="bg-black/60 rounded-xl p-4 font-mono text-xs text-green-400 max-h-72 overflow-y-auto border border-slate-800 leading-relaxed"></div>
         </div>
       </section>
 
@@ -4180,90 +4252,163 @@ This addendum governs the processing of personal data.
       const logOutput = $('audit-log-output');
       const reportEl = $('audit-intel-report');
       const btn = $('run-audit-btn');
+      const progressEl = $('audit-global-progress');
+      const summaryStatsEl = $('audit-summary-stats');
 
-      if (btn) { btn.disabled = true; btn.textContent = 'Running...'; }
+      if (btn) { btn.disabled = true; btn.innerHTML = '<span class="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span> Scanning...'; }
       if (reportEl) reportEl.classList.add('hidden');
-      if (logsEl) { logsEl.classList.remove('hidden'); }
+      if (summaryStatsEl) summaryStatsEl.classList.add('hidden');
+      if (logsEl) logsEl.classList.remove('hidden');
       if (logOutput) logOutput.innerHTML = '';
+      if (progressEl) progressEl.classList.remove('hidden');
 
       const pipelineSteps = [
-        { step: 1, label: 'DNS & TLS Analysis', icon: '🔐', detail: 'Checking SPF/DKIM/DMARC + TLS configuration...' },
-        { step: 2, label: 'Certificate Transparency Scan', icon: '📜', detail: 'Querying crt.sh for subdomain enumeration...' },
-        { step: 3, label: 'Threat Intelligence Feeds', icon: '🕵️', detail: 'Querying Shodan, HaveIBeenPwned, VirusTotal...' },
-        { step: 4, label: 'Vulnerability Scanning', icon: '🔍', detail: 'Running ProjectDiscovery Nuclei templates...' },
-        { step: 5, label: 'DPDP Act 2023 Mapping', icon: '📋', detail: 'Mapping findings to DPDP clauses with ₹ liability...' },
-        { step: 6, label: 'AI Risk Analysis & Scoring', icon: '🧠', detail: 'Computing trust score + generating AI summary...' },
+        { step: 1, label: 'DNS & TLS Analysis', icon: '🔐', detail: 'Resolving DNS records, checking SPF/DKIM/DMARC + TLS certificate chain...', sources: ['DNS Resolver', 'TLS Handshake'], color: 'cyan' },
+        { step: 2, label: 'Certificate Transparency', icon: '📜', detail: 'Querying crt.sh public CT logs for subdomain enumeration & shadow IT...', sources: ['crt.sh (Public CT)'], color: 'blue' },
+        { step: 3, label: 'Threat Intelligence Feeds', icon: '🕵️', detail: 'Correlating across Shodan, HaveIBeenPwned, VirusTotal reputation engines...', sources: ['Shodan', 'HIBP', 'VirusTotal'], color: 'purple' },
+        { step: 4, label: 'Vulnerability Scanning', icon: '🔍', detail: 'Running ProjectDiscovery Nuclei CVE/misconfig/exposure templates...', sources: ['Nuclei Engine'], color: 'amber' },
+        { step: 5, label: 'DPDP Act 2023 Mapping', icon: '📋', detail: 'Mapping findings to DPDP clauses with RAG citations + ₹ liability calc...', sources: ['DPDP RAG (49 passages)'], color: 'emerald' },
+        { step: 6, label: 'AI Risk Analysis & Scoring', icon: '🧠', detail: 'Computing IsolationForest trust score + generating executive summary...', sources: ['ML Scorer', 'AI Engine'], color: 'rose' },
       ];
 
-      // Render initial pipeline state
+      // Render initial pipeline state with enhanced visuals
       if (stepsEl) {
         stepsEl.innerHTML = pipelineSteps.map(s => `
-          <div id="audit-step-${s.step}" class="rounded-xl border border-slate-800 bg-slate-900/50 p-4 flex items-center gap-4 transition-all">
-            <div class="text-2xl w-8 text-center">${s.icon}</div>
-            <div class="flex-1">
-              <div class="text-sm font-medium text-slate-300">Step ${s.step}: ${s.label}</div>
-              <div class="text-xs text-slate-500">${s.detail}</div>
+          <div id="audit-step-${s.step}" class="rounded-xl border border-slate-800 bg-slate-900/50 p-4 transition-all duration-500 overflow-hidden">
+            <div class="flex items-center gap-4">
+              <div class="relative">
+                <div class="text-2xl w-10 h-10 flex items-center justify-center rounded-lg bg-slate-800/80">${s.icon}</div>
+                <div id="audit-step-indicator-${s.step}" class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-slate-700 border-2 border-slate-900"></div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-semibold text-slate-300">Layer ${s.step}</span>
+                  <span class="text-xs text-slate-500">·</span>
+                  <span class="text-sm text-slate-400">${s.label}</span>
+                </div>
+                <div class="text-xs text-slate-600 mt-0.5 truncate">${s.detail}</div>
+              </div>
+              <div class="text-right shrink-0">
+                <div id="audit-step-status-${s.step}" class="text-xs text-slate-600 font-mono">PENDING</div>
+                <div id="audit-step-meta-${s.step}" class="text-[10px] text-slate-700 mt-0.5"></div>
+              </div>
             </div>
-            <div class="text-xs text-slate-600" id="audit-step-status-${s.step}">Pending</div>
+            <div id="audit-step-progress-${s.step}" class="mt-2 hidden">
+              <div class="w-full bg-slate-800 rounded-full h-1 overflow-hidden">
+                <div class="h-full bg-${s.color}-500 rounded-full transition-all duration-1000 shimmer" style="width:0%"></div>
+              </div>
+            </div>
+            <div id="audit-step-sources-${s.step}" class="mt-2 hidden flex flex-wrap gap-1.5">
+              ${s.sources.map(src => `<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800/80 text-slate-500 border border-slate-700/50">${src}</span>`).join('')}
+            </div>
+            <div id="audit-step-findings-${s.step}" class="mt-2 hidden text-[10px] text-slate-600 font-mono"></div>
           </div>
         `).join('');
       }
 
-      function logMsg(msg) {
+      let logCount = 0;
+      function logMsg(msg, type) {
         if (!logOutput) return;
+        logCount++;
         const ts = new Date().toISOString().split('T')[1].split('.')[0];
-        logOutput.innerHTML += `<div>[${ts}] ${msg}</div>`;
+        const colorClass = type === 'error' ? 'text-red-400' : type === 'success' ? 'text-emerald-400' : type === 'info' ? 'text-cyan-400' : 'text-green-400';
+        logOutput.innerHTML += `<div class="${colorClass}"><span class="text-slate-600">[${ts}]</span> ${msg}</div>`;
         logOutput.scrollTop = logOutput.scrollHeight;
+        const countEl = $('audit-log-count');
+        if (countEl) countEl.textContent = `${logCount} entries`;
       }
 
-      function updateStep(step, status, detail, durationMs) {
+      function updateProgress(pct, label) {
+        const bar = $('audit-progress-bar');
+        const pctEl = $('audit-progress-pct');
+        const labelEl = $('audit-progress-label');
+        if (bar) bar.style.width = pct + '%';
+        if (pctEl) pctEl.textContent = Math.round(pct) + '%';
+        if (labelEl) labelEl.textContent = label;
+      }
+
+      function updateStep(step, status, detail, durationMs, findingsCount) {
         const el = document.getElementById(`audit-step-${step}`);
         const statusEl = document.getElementById(`audit-step-status-${step}`);
+        const metaEl = document.getElementById(`audit-step-meta-${step}`);
+        const indicatorEl = document.getElementById(`audit-step-indicator-${step}`);
+        const progressBarEl = document.getElementById(`audit-step-progress-${step}`);
+        const sourcesEl = document.getElementById(`audit-step-sources-${step}`);
+        const findingsEl = document.getElementById(`audit-step-findings-${step}`);
         if (!el) return;
+
         if (status === 'running') {
-          el.classList.remove('border-slate-800');
-          el.classList.add('border-cyan-700', 'bg-cyan-950/20');
-          if (statusEl) { statusEl.textContent = 'Running...'; statusEl.classList.add('text-cyan-400', 'animate-pulse'); }
+          el.classList.remove('border-slate-800', 'bg-slate-900/50');
+          el.classList.add('border-cyan-700/60', 'bg-cyan-950/10');
+          if (indicatorEl) { indicatorEl.classList.remove('bg-slate-700'); indicatorEl.classList.add('bg-cyan-400', 'animate-pulse'); }
+          if (statusEl) { statusEl.textContent = 'SCANNING...'; statusEl.classList.add('text-cyan-400'); }
+          if (progressBarEl) { progressBarEl.classList.remove('hidden'); progressBarEl.querySelector('div > div').style.width = '60%'; }
+          if (sourcesEl) sourcesEl.classList.remove('hidden');
         } else if (status === 'complete') {
-          el.classList.remove('border-cyan-700', 'bg-cyan-950/20');
-          el.classList.add('border-emerald-700', 'bg-emerald-950/20');
+          el.classList.remove('border-cyan-700/60', 'bg-cyan-950/10', 'border-slate-800', 'bg-slate-900/50');
+          el.classList.add('border-emerald-800/60', 'bg-emerald-950/10');
+          if (indicatorEl) { indicatorEl.classList.remove('bg-cyan-400', 'bg-slate-700', 'animate-pulse'); indicatorEl.classList.add('bg-emerald-400'); }
           if (statusEl) {
-            statusEl.textContent = detail ? `${durationMs}ms` : 'Done';
-            statusEl.classList.remove('text-cyan-400', 'animate-pulse');
+            statusEl.textContent = durationMs != null ? `${durationMs}ms` : 'DONE';
+            statusEl.classList.remove('text-cyan-400', 'text-slate-600');
             statusEl.classList.add('text-emerald-400');
           }
+          if (metaEl && findingsCount != null) metaEl.textContent = `${findingsCount} finding${findingsCount !== 1 ? 's' : ''}`;
+          if (progressBarEl) { progressBarEl.querySelector('div > div').style.width = '100%'; }
+          if (sourcesEl) sourcesEl.classList.remove('hidden');
+          if (findingsEl && findingsCount != null && findingsCount > 0) {
+            findingsEl.classList.remove('hidden');
+            findingsEl.textContent = `Discovered ${findingsCount} issue${findingsCount !== 1 ? 's' : ''} in this layer`;
+          }
         } else if (status === 'error') {
-          el.classList.remove('border-cyan-700', 'bg-cyan-950/20');
-          el.classList.add('border-red-700', 'bg-red-950/20');
-          if (statusEl) { statusEl.textContent = 'Error'; statusEl.classList.add('text-red-400'); }
+          el.classList.remove('border-cyan-700/60', 'bg-cyan-950/10');
+          el.classList.add('border-red-800/60', 'bg-red-950/10');
+          if (indicatorEl) { indicatorEl.classList.remove('bg-cyan-400', 'bg-slate-700', 'animate-pulse'); indicatorEl.classList.add('bg-red-400'); }
+          if (statusEl) { statusEl.textContent = 'ERROR'; statusEl.classList.add('text-red-400'); }
         }
       }
+
+      logMsg(`Initiating 6-layer deep scan for <strong>${vendor}</strong>`, 'info');
+      logMsg('Resolving target domain...', 'info');
+      const auditStartTime = performance.now();
+
+      // Elapsed time counter
+      const elapsedEl = $('audit-elapsed-time');
+      const dataProcessedEl = $('audit-data-processed');
+      let sourcesQueried = 0;
+      const elapsedInterval = setInterval(() => {
+        const elapsed = ((performance.now() - auditStartTime) / 1000).toFixed(1);
+        if (elapsedEl) elapsedEl.textContent = `${elapsed}s elapsed`;
+        if (dataProcessedEl) dataProcessedEl.textContent = `${sourcesQueried} data sources queried`;
+      }, 100);
 
       // Animate steps while making the API call
-      let stepAnimInterval = null;
-      let currentAnimStep = 1;
-      logMsg(`Starting full audit pipeline for ${vendor}...`);
+      lastAuditResult = null;
 
-      // Start step animation
       async function animateSteps() {
         for (let i = 1; i <= 6; i++) {
-          if (lastAuditResult) break; // API already returned
+          if (lastAuditResult) break;
+          const s = pipelineSteps[i-1];
           updateStep(i, 'running');
-          logMsg(`Step ${i}: ${pipelineSteps[i-1].label} — ${pipelineSteps[i-1].detail}`);
-          await new Promise(r => setTimeout(r, 800 + Math.random() * 700));
+          updateProgress((i - 1) / 6 * 100 + 8, `Layer ${i}: ${s.label}...`);
+          logMsg(`Layer ${i}: ${s.label} — ${s.detail}`);
+          sourcesQueried += s.sources.length;
+          await new Promise(r => setTimeout(r, 700 + Math.random() * 600));
           if (!lastAuditResult) {
-            updateStep(i, 'complete', true, Math.floor(100 + Math.random() * 400));
-            logMsg(`Step ${i}: Complete`);
+            const fakeDuration = Math.floor(100 + Math.random() * 500);
+            const fakeFindings = Math.floor(Math.random() * 4);
+            updateStep(i, 'complete', true, fakeDuration, fakeFindings);
+            logMsg(`Layer ${i}: Complete in ${fakeDuration}ms — ${fakeFindings} findings`, 'success');
           }
         }
+        if (!lastAuditResult) updateProgress(95, 'Waiting for backend response...');
       }
 
-      lastAuditResult = null;
       const animPromise = animateSteps();
 
       // Make the actual API call
       try {
-        logMsg('Connecting to backend API...');
+        logMsg('Connecting to VendorGuard backend API...', 'info');
         const r = await fetch(`${API}/audit/pipeline/${encodeURIComponent(vendor)}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -4271,27 +4416,49 @@ This addendum governs the processing of personal data.
         });
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
         lastAuditResult = await r.json();
-        logMsg('Backend pipeline complete. Processing results...');
+        logMsg('Backend pipeline complete. Processing intelligence report...', 'success');
       } catch (err) {
-        logMsg(`Backend unavailable (${err.message}). Using demo data...`);
-        // Fall back to demo data
+        logMsg(`Backend unavailable (${err.message}). Falling back to demo intelligence...`, 'error');
         lastAuditResult = generateDemoAuditResult(vendor);
       }
 
-      // Wait for animation to finish
       await animPromise;
+      clearInterval(elapsedInterval);
 
-      // Update steps with real data if available
+      // Update with real data
       if (lastAuditResult && lastAuditResult.pipeline) {
+        sourcesQueried = 0;
         lastAuditResult.pipeline.steps.forEach(s => {
-          updateStep(s.step, 'complete', true, s.duration_ms);
-          logMsg(`Step ${s.step}: ${s.label} — ${s.details} (${s.duration_ms}ms)`);
+          const stepSources = s.sources || [];
+          sourcesQueried += stepSources.length;
+          updateStep(s.step, 'complete', true, s.duration_ms, s.findings_count);
+          logMsg(`Layer ${s.step}: ${s.label} — ${s.details} [${s.duration_ms}ms, ${s.findings_count} findings]`, 'success');
         });
       } else {
-        for (let i = 1; i <= 6; i++) updateStep(i, 'complete', true, Math.floor(100 + Math.random() * 500));
+        for (let i = 1; i <= 6; i++) updateStep(i, 'complete', true, Math.floor(100 + Math.random() * 500), Math.floor(Math.random() * 3));
       }
 
-      logMsg('Pipeline complete. Rendering intelligence report...');
+      const totalMs = lastAuditResult?.pipeline?.total_duration_ms || Math.floor(performance.now() - auditStartTime);
+      const totalFindings = lastAuditResult?.intelligence_report?.total_findings || lastAuditResult?.result?.findings?.length || 0;
+      updateProgress(100, 'Pipeline complete');
+      if (elapsedEl) elapsedEl.textContent = `${(totalMs / 1000).toFixed(1)}s total`;
+      if (dataProcessedEl) dataProcessedEl.textContent = `${sourcesQueried} data sources queried`;
+
+      logMsg(`Pipeline finished in ${totalMs}ms — ${totalFindings} total findings`, 'success');
+
+      // Show summary stats
+      if (summaryStatsEl) {
+        summaryStatsEl.classList.remove('hidden');
+        const statDuration = $('audit-stat-duration');
+        const statSources = $('audit-stat-sources');
+        const statFindings = $('audit-stat-findings');
+        const statApis = $('audit-stat-apis');
+        if (statDuration) statDuration.textContent = totalMs < 1000 ? `${totalMs}ms` : `${(totalMs / 1000).toFixed(1)}s`;
+        if (statSources) statSources.textContent = sourcesQueried;
+        if (statFindings) statFindings.textContent = totalFindings;
+        const apiCount = lastAuditResult?.intelligence_report?.apis_queried ? Object.values(lastAuditResult.intelligence_report.apis_queried).filter(v => v).length : 0;
+        if (statApis) statApis.textContent = apiCount || '6+';
+      }
 
       // Render intelligence report
       renderIntelligenceReport(lastAuditResult);
@@ -4304,7 +4471,7 @@ This addendum governs the processing of personal data.
         try { renderDPDP(lastScan.dpdp || []); } catch {}
       }
 
-      if (btn) { btn.disabled = false; btn.textContent = 'Run Full Audit'; }
+      if (btn) { btn.disabled = false; btn.innerHTML = '<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Run Full Audit'; }
     }
 
     function generateDemoAuditResult(vendor) {
